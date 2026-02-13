@@ -1,0 +1,92 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+
+# Format with prettier (all files)
+echo "Running prettier..."
+pnpm prettier --write .
+
+# Stage formatted files
+pnpm lint-staged
+
+# Check for use-client in page.tsx or layout.tsx
+check_use_client() {
+  echo "Checking for use-client in page/layout files..."
+  ERROR=0
+
+  for file in $(git diff --cached --name-only --diff-filter=ACM | grep -E "(page|layout)\.tsx$"); do
+    if grep -q "use client" "$file" 2>/dev/null; then
+      echo "ERROR: $file contains \"use client\" which is not allowed in page/layout files"
+      ERROR=1
+    fi
+  done
+
+  for file in $(git diff --name-only | grep -E "(page|layout)\.tsx$"); do
+    if grep -q "use client" "$file" 2>/dev/null; then
+      echo "ERROR: $file contains \"use client\" which is not allowed in page/layout files"
+      ERROR=1
+    fi
+  done
+
+  if [ $ERROR -eq 1 ]; then
+    exit 1
+  fi
+  echo "PASS: No use-client in page/layout files"
+}
+
+# Check max lines in .tsx files
+check_max_lines() {
+  echo "Checking max lines in .tsx files..."
+  ERROR=0
+
+  for file in $(git diff --cached --name-only --diff-filter=ACM | grep -E "\.tsx$"); do
+    LINES=$(wc -l < "$file")
+    if [ "$LINES" -gt 300 ]; then
+      echo "ERROR: $file has $LINES lines (max 300)"
+      ERROR=1
+    fi
+  done
+
+  if [ $ERROR -eq 1 ]; then
+    exit 1
+  fi
+  echo "PASS: All .tsx files under 300 lines"
+}
+
+# Check for big files staged
+check_big_files() {
+  echo "Checking for big files..."
+  ERROR=0
+  MAX_SIZE=100000
+  for file in $(git diff --cached --name-only --diff-filter=ACM); do
+    SIZE=$(wc -c < "$file" 2>/dev/null)
+    if [ -n "$SIZE" ] && [ "$SIZE" -gt $MAX_SIZE ]; then
+      echo "ERROR: $file is too big ($(($SIZE/1024))KB, max 100KB)"
+      ERROR=1
+    fi
+  done
+
+  if [ $ERROR -eq 1 ]; then
+    exit 1
+  fi
+  echo "PASS: No big files staged"
+}
+
+# Run build check
+check_build() {
+  echo "Running build check..."
+  if ! pnpm run build > /dev/null 2>&1; then
+    echo "ERROR: Build failed"
+    pnpm run build
+    exit 1
+  fi
+  echo "PASS: Build successful"
+}
+
+# Run checks
+check_use_client
+check_max_lines
+check_big_files
+check_build
+
+echo "All pre-commit checks passed!"
