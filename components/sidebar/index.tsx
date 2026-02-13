@@ -31,20 +31,20 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* Logo */}
       <div
         className={cn(
-          'flex items-center h-14 px-4 border-b border-border',
-          collapsed ? 'justify-center px-0' : 'justify-between'
+          'grid grid-cols-[1fr_auto] items-center h-14 px-4 border-b border-border',
+          collapsed ? 'px-0' : ''
         )}
       >
         {!collapsed && (
-          <Link href="/" className="text-sm font-semibold">
+          <Link href="/" className="text-sm font-semibold justify-self-start">
             Logo
           </Link>
         )}
         <button
           onClick={onToggle}
           className={cn(
-            'p-1.5 rounded hover:bg-muted transition-colors',
-            collapsed && 'absolute right-1'
+            'p-1.5  hover:bg-muted transition-colors',
+            collapsed && 'col-start-1 row-start-1'
           )}
         >
           {collapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
@@ -53,7 +53,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 py-3 overflow-y-auto">
-        <ul className="space-y-1 px-2">
+        <ul className="grid gap-1 px-2">
           {navigation.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
             return (
@@ -61,7 +61,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 <Link
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2.5 text-sm transition-colors',
+                    'grid grid-cols-[auto_1fr] gap-3 items-center px-3 py-2.5 text-sm transition-colors',
                     isActive
                       ? 'bg-primary text-primary-foreground'
                       : 'text-foreground/70 hover:text-foreground hover:bg-muted',
@@ -81,16 +81,16 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* Footer */}
       <div className={cn('p-3 border-t border-border', collapsed ? 'px-2' : 'px-3')}>
         {!collapsed ? (
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-muted flex items-center justify-center">
+          <div className="grid grid-cols-[auto_1fr] gap-3 items-center">
+            <div className="w-8 h-8  bg-muted flex items-center justify-center">
               <span className="text-sm font-medium">A</span>
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="min-w-0">
               <p className="text-sm font-medium truncate">Admin</p>
             </div>
           </div>
         ) : (
-          <div className="w-8 h-8 rounded bg-muted flex items-center justify-center mx-auto">
+          <div className="w-8 h-8  bg-muted flex items-center justify-center mx-auto">
             <span className="text-sm font-medium">A</span>
           </div>
         )}

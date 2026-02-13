@@ -14,11 +14,7 @@ UCard.displayName = 'UCard'
 
 const UCardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('flex flex-col gap-1 p-3 border-b border-border', className)}
-      {...props}
-    />
+    <div ref={ref} className={cn('grid gap-1 p-3 border-b border-border', className)} {...props} />
   )
 )
 UCardHeader.displayName = 'UCardHeader'
@@ -46,11 +42,22 @@ const UCardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDi
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex items-center p-3 border-t border-border', className)}
+      className={cn('grid items-center p-3 border-t border-border', className)}
       {...props}
     />
   )
 )
 UCardFooter.displayName = 'UCardFooter'
 
-export { UCard, UCardHeader, UCardFooter, UCardTitle, UCardDescription, UCardContent }
+const UCardGrid = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4', className)}
+      {...props}
+    />
+  )
+)
+UCardGrid.displayName = 'UCardGrid'
+
+export { UCard, UCardHeader, UCardFooter, UCardTitle, UCardDescription, UCardContent, UCardGrid }
