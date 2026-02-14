@@ -36,7 +36,7 @@ export default function Index() {
     <div className="space-y-4">
       {/* Page Header */}
       <div>
-        <h1 className="text-xl font-semibold text-foreground">Application Tracking</h1>
+        <h1 className="text-xl font-semibold text-foreground">Dashboard Overview</h1>
         <p className="text-sm text-muted-foreground">Track your job applications and proposals</p>
       </div>
 

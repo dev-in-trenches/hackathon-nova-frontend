@@ -11,7 +11,7 @@ const UCheckbox = React.forwardRef<HTMLInputElement, UCheckboxProps>(
       <input
         type="checkbox"
         className={cn(
-          'w-4 h-4 border border-border rounded-sm appearance-none cursor-pointer',
+          'w-4 h-4 border border-border appearance-none cursor-pointer',
           'checked:bg-primary checked:border-primary',
           'focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1',
           'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
