@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { UCard, UCardContent, UCardHeader, UCardTitle } from '@/components/ui/card'
-import { UButton } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { ProposalListSection } from './proposal-list-section'
+import { ProposalEditorSection } from './proposal-editor-section'
+import { Proposal } from './types'
+import { PageHeading } from '@/components/shared/page-heading'
 
-const proposals = [
+const proposals: Proposal[] = [
   {
     id: 1,
     jobTitle: 'Full Stack Developer - TechCorp',
@@ -50,7 +51,7 @@ const proposals = [
   },
   {
     id: 4,
-    title: 'UI/UX Designer - Creative Agency',
+    jobTitle: 'UI/UX Designer - Creative Agency',
     client: 'Creative Agency',
     budget: '$2,500',
     status: 'Won',
@@ -64,17 +65,9 @@ const proposals = [
   },
 ]
 
-const statusColors: Record<string, string> = {
-  Drafted: 'bg-muted text-muted-foreground',
-  Submitted: 'bg-amber-100 text-amber-700',
-  Approved: 'bg-blue-100 text-blue-700',
-  Won: 'bg-green-100 text-green-700',
-  Lost: 'bg-red-100 text-red-700',
-}
-
 export default function ProposalsPage() {
   const [proposalsData, setProposalsData] = useState(proposals)
-  const [selectedProposal, setSelectedProposal] = useState<(typeof proposals)[0] | null>(null)
+  const [selectedProposal, setSelectedProposal] = useState<Proposal | null>(null)
   const [editingSection, setEditingSection] = useState<string | null>(null)
   const [editedContent, setEditedContent] = useState('')
 
@@ -109,142 +102,28 @@ export default function ProposalsPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-xl font-semibold text-foreground">Proposal Editor</h1>
-        <p className="text-sm text-muted-foreground">Review and refine AI-generated proposals</p>
-      </div>
+      <PageHeading title="Proposal Editor" description="Review and refine AI-generated proposals" />
 
       <div className="grid gap-4 lg:grid-cols-3">
-        {/* Proposal List */}
-        <UCard className="lg:col-span-1">
-          <UCardHeader className="py-3">
-            <UCardTitle className="text-base font-semibold">
-              Proposals ({proposalsData.length})
-            </UCardTitle>
-          </UCardHeader>
-          <UCardContent className="py-1">
-            <div className="space-y-2">
-              {proposalsData.map((proposal) => (
-                <div
-                  key={proposal.id}
-                  onClick={() => {
-                    setSelectedProposal(proposal)
-                    setEditingSection(null)
-                  }}
-                  className={cn(
-                    'p-3 cursor-pointer transition-colors',
-                    selectedProposal?.id === proposal.id
-                      ? 'bg-primary/10 border border-primary'
-                      : 'bg-muted/50 hover:bg-muted'
-                  )}
-                >
-                  <p className="text-sm font-medium text-foreground">
-                    {proposal.jobTitle || proposal.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{proposal.client}</p>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs font-medium text-foreground">{proposal.budget}</span>
-                    <span className={cn('px-2 py-0.5 text-xs', statusColors[proposal.status])}>
-                      {proposal.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </UCardContent>
-        </UCard>
+        <ProposalListSection
+          proposals={proposalsData}
+          selectedProposal={selectedProposal}
+          onSelect={(proposal) => {
+            setSelectedProposal(proposal)
+            setEditingSection(null)
+          }}
+        />
 
-        {/* Proposal Editor */}
-        <UCard className="lg:col-span-2">
-          <UCardHeader className="py-3 flex flex-row items-center justify-between">
-            <UCardTitle className="text-base font-semibold">
-              {selectedProposal
-                ? selectedProposal.jobTitle || selectedProposal.title
-                : 'Select a proposal'}
-            </UCardTitle>
-            {selectedProposal && (
-              <div className="flex gap-2">
-                <UButton size="sm" variant="outline">
-                  Shorten
-                </UButton>
-                <UButton size="sm" variant="outline">
-                  More Technical
-                </UButton>
-                <UButton size="sm" variant="outline">
-                  Change Tone
-                </UButton>
-              </div>
-            )}
-          </UCardHeader>
-          <UCardContent>
-            {selectedProposal ? (
-              <div className="space-y-4">
-                {Object.entries(selectedProposal.sections).map(([section, content]) => (
-                  <div key={section} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground capitalize">
-                        {section}
-                      </label>
-                      <UButton
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleEditSection(section, content)}
-                      >
-                        Edit
-                      </UButton>
-                    </div>
-                    {editingSection === section ? (
-                      <div className="space-y-2">
-                        <textarea
-                          value={editedContent}
-                          onChange={(e) => setEditedContent(e.target.value)}
-                          className="w-full min-h-[80px] p-2 text-sm bg-muted border"
-                        />
-                        <div className="flex gap-2">
-                          <UButton size="sm" onClick={handleSaveSection}>
-                            Save
-                          </UButton>
-                          <UButton
-                            size="sm"
-                            variant="outline"
-                            onClick={() => setEditingSection(null)}
-                          >
-                            Cancel
-                          </UButton>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-muted-foreground p-2 bg-muted/50">{content}</p>
-                    )}
-                  </div>
-                ))}
-
-                <div className="pt-4 border-t">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <label className="text-sm font-medium text-foreground">Bid Amount</label>
-                      <p className="text-lg font-bold text-foreground">{selectedProposal.budget}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <UButton
-                        variant="outline"
-                        onClick={() => handleDeleteProposal(selectedProposal.id)}
-                      >
-                        Delete
-                      </UButton>
-                      <UButton variant="outline">Approve</UButton>
-                      <UButton>Submit</UButton>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Select a proposal from the list to edit
-              </p>
-            )}
-          </UCardContent>
-        </UCard>
+        <ProposalEditorSection
+          proposal={selectedProposal}
+          editingSection={editingSection}
+          editedContent={editedContent}
+          onEditSection={handleEditSection}
+          onSaveSection={handleSaveSection}
+          onCancelEdit={() => setEditingSection(null)}
+          onContentChange={setEditedContent}
+          onDelete={() => handleDeleteProposal(selectedProposal?.id || 0)}
+        />
       </div>
     </div>
   )

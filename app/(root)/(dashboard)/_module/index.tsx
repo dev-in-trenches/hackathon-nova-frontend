@@ -1,4 +1,10 @@
+'use client'
+
 import { UCard, UCardContent, UCardHeader, UCardTitle } from '@/components/ui/card'
+import { MetricsSection } from './metrics-section'
+import { PipelineSection } from './pipeline-section'
+import { RecentActivitySection } from './recent-activity-section'
+import { PageHeading } from '@/components/shared/page-heading'
 import { cn } from '@/lib/utils'
 
 const applicationStatus = [
@@ -11,10 +17,10 @@ const applicationStatus = [
 ]
 
 const metrics = [
-  { label: 'Win Rate', value: '32%', change: '+5%', trend: 'up' },
-  { label: 'Avg Proposal Time', value: '2.4h', change: '-12%', trend: 'up' },
-  { label: 'Edit Percentage', value: '18%', change: '-3%', trend: 'up' },
-  { label: 'Revenue Impact', value: '$45K', change: '+22%', trend: 'up' },
+  { label: 'Win Rate', value: '32%', change: '+5%', trend: 'up' as const },
+  { label: 'Avg Proposal Time', value: '2.4h', change: '-12%', trend: 'up' as const },
+  { label: 'Edit Percentage', value: '18%', change: '-3%', trend: 'up' as const },
+  { label: 'Revenue Impact', value: '$45K', change: '+22%', trend: 'up' as const },
 ]
 
 const recentActivity = [
@@ -34,87 +40,17 @@ const userFlowSteps = [
 export default function Index() {
   return (
     <div className="space-y-4">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-xl font-semibold text-foreground">Dashboard Overview</h1>
-        <p className="text-sm text-muted-foreground">Track your job applications and proposals</p>
-      </div>
+      <PageHeading
+        title="Dashboard Overview"
+        description="Track your job applications and proposals"
+      />
 
-      {/* Metrics Grid */}
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-        {metrics.map((metric) => (
-          <UCard key={metric.label}>
-            <UCardHeader className="py-3">
-              <UCardTitle className="text-sm font-medium text-muted-foreground">
-                {metric.label}
-              </UCardTitle>
-            </UCardHeader>
-            <UCardContent>
-              <div className="text-2xl font-bold text-foreground">{metric.value}</div>
-              <p className="text-sm text-muted-foreground">
-                <span
-                  className={cn(
-                    'font-medium',
-                    metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                  )}
-                >
-                  {metric.change}
-                </span>{' '}
-                vs last month
-              </p>
-            </UCardContent>
-          </UCard>
-        ))}
-      </div>
+      <MetricsSection metrics={metrics} />
 
-      {/* Application Status */}
-      <UCard>
-        <UCardHeader className="py-3">
-          <UCardTitle className="text-base font-semibold">Application Pipeline</UCardTitle>
-        </UCardHeader>
-        <UCardContent>
-          <div className="flex gap-2 overflow-x-auto">
-            {applicationStatus.map((status) => (
-              <div
-                key={status.label}
-                className={cn(
-                  'flex flex-col items-center justify-center p-3 min-w-[80px]',
-                  status.color
-                )}
-              >
-                <span className="text-2xl font-bold text-foreground">{status.count}</span>
-                <span className="text-xs text-muted-foreground">{status.label}</span>
-              </div>
-            ))}
-          </div>
-        </UCardContent>
-      </UCard>
+      <PipelineSection status={applicationStatus} />
 
       <div className="grid gap-3 md:grid-cols-2">
-        {/* Recent Activity */}
-        <UCard>
-          <UCardHeader className="py-3">
-            <UCardTitle className="text-base font-semibold">Recent Activity</UCardTitle>
-          </UCardHeader>
-          <UCardContent className="py-1">
-            <div className="space-y-2">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-center gap-3 py-2">
-                  <div className="w-8 h-8 bg-muted flex items-center justify-center">
-                    <span className="text-sm font-medium text-muted-foreground">
-                      {activity.user.charAt(0)}
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{activity.user}</p>
-                    <p className="text-sm text-muted-foreground truncate">{activity.action}</p>
-                  </div>
-                  <span className="text-sm text-muted-foreground">{activity.time}</span>
-                </div>
-              ))}
-            </div>
-          </UCardContent>
-        </UCard>
+        <RecentActivitySection activities={recentActivity} />
 
         {/* User Flow */}
         <UCard>
@@ -154,7 +90,7 @@ export default function Index() {
       {/* User Profile Setup Details */}
       <UCard>
         <UCardHeader className="py-3">
-          <UCardTitle className="text-base font-semibold">4.1 User Profile Setup</UCardTitle>
+          <UCardTitle className="text-base font-semibold">User Profile Setup</UCardTitle>
         </UCardHeader>
         <UCardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">

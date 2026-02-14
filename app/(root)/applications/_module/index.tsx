@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { UCard, UCardContent, UCardHeader, UCardTitle } from '@/components/ui/card'
-import { UButton } from '@/components/ui/button'
 import { DataTable, Column } from '@/components/shared/table'
+import { PipelineSection } from './pipeline-section'
+import { SearchFilterSection } from './search-filter-section'
+import { PageHeading } from '@/components/shared/page-heading'
 import { cn } from '@/lib/utils'
 
 const applicationStatus = [
@@ -155,59 +157,27 @@ export default function ApplicationsPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-xl font-semibold text-foreground">Application Tracking</h1>
-        <p className="text-sm text-muted-foreground">Manage your job applications pipeline</p>
-      </div>
+      <PageHeading
+        title="Application Tracking"
+        description="Manage your job applications pipeline"
+      />
 
-      {/* Pipeline View */}
-      <UCard>
-        <UCardHeader className="py-3">
-          <UCardTitle className="text-base font-semibold">Pipeline</UCardTitle>
-        </UCardHeader>
-        <UCardContent>
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            {applicationStatus.map((status) => (
-              <button
-                key={status.label}
-                onClick={() =>
-                  setSelectedStatus(selectedStatus === status.label ? null : status.label)
-                }
-                className={cn(
-                  'flex flex-col items-center justify-center p-4 min-w-[100px] transition-colors',
-                  status.color,
-                  selectedStatus === status.label && 'ring-2 ring-primary'
-                )}
-              >
-                <span className="text-3xl font-bold text-foreground">{status.count}</span>
-                <span className="text-sm font-medium text-muted-foreground">{status.label}</span>
-              </button>
-            ))}
-          </div>
-        </UCardContent>
-      </UCard>
+      <PipelineSection
+        status={applicationStatus}
+        selectedStatus={selectedStatus}
+        onStatusClick={setSelectedStatus}
+      />
 
-      {/* Search and Filter */}
-      <div className="flex gap-3">
-        <input
-          type="text"
-          placeholder="Search jobs..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 h-9 px-3 text-sm bg-muted border"
-        />
-        <UButton
-          variant="outline"
-          onClick={() => {
-            setSearchQuery('')
-            setSelectedStatus(null)
-          }}
-        >
-          Clear
-        </UButton>
-      </div>
+      <SearchFilterSection
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onClear={() => {
+          setSearchQuery('')
+          setSelectedStatus(null)
+        }}
+        placeholder="Search jobs..."
+      />
 
-      {/* Job List Table */}
       <UCard>
         <UCardHeader className="py-3">
           <UCardTitle className="text-base font-semibold">
