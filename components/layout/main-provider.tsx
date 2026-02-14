@@ -5,7 +5,7 @@ import Sidebar from '../sidebar'
 import { UInput } from '@/components/ui'
 import { Search } from 'lucide-react'
 
-export default function Main({ children }: { children: React.ReactNode }) {
+export default function LMainProvider({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false)
 
   return (

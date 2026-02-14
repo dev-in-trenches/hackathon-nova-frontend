@@ -6,7 +6,7 @@ import LClientProvider from '@/components/layout/client-provider'
 import { AppContextProvider } from '@/components/layout/context-provider'
 import LQueryProvider from '@/components/layout/query-provider'
 import LToastProvider from '@/components/layout/toast-provider'
-import AdminLayout from '@/components/sidebar/main'
+import LMainProvider from '@/components/layout/main-provider'
 
 const fDefault = Open_Sans({
   variable: '--font-default',
@@ -32,7 +32,7 @@ export default function RootLayout({
             <LToastProvider />
             <LQueryProvider>
               <LClientProvider>
-                <AdminLayout>{children}</AdminLayout>
+                <LMainProvider>{children}</LMainProvider>
               </LClientProvider>
             </LQueryProvider>
           </AppContextProvider>
