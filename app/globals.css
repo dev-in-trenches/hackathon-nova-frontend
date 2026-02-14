@@ -67,10 +67,12 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
+    box-sizing: border-box;
     border-color: var(--border);
   }
 
   button {
+    box-sizing: border-box;
     all: unset;
     cursor: pointer;
   }
