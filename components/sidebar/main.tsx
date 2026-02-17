@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Sidebar from '../sidebar'
 import { UInput } from '@/components/ui'
-import { Search } from 'lucide-react'
+import { LuSearch } from 'react-icons/lu'
 
 export default function Main({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false)
@@ -16,7 +16,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
           <div className="grid grid-cols-[1fr_auto] items-center h-full px-2 gap-4">
             <div className="flex-1 max-w-sm">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                <LuSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 <UInput type="text" placeholder="Search..." className="pl-9 bg-muted" />
               </div>
             </div>

@@ -2,7 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, FileText, TrendingUp, Briefcase, Menu, X } from 'lucide-react'
+import { LuLayoutDashboard, LuFileText, LuTrendingUp, LuBriefcase } from 'react-icons/lu'
+import { GoSidebarCollapse } from 'react-icons/go'
 import { Link } from 'next-view-transitions'
 
 interface SidebarProps {
@@ -11,10 +12,10 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Applications', href: '/applications', icon: Briefcase },
-  { name: 'Proposals', href: '/proposals', icon: FileText },
-  { name: 'Analytics', href: '/analytics', icon: TrendingUp },
+  { name: 'Dashboard', href: '/', icon: LuLayoutDashboard },
+  { name: 'Applications', href: '/applications', icon: LuBriefcase },
+  { name: 'Proposals', href: '/proposals', icon: LuFileText },
+  { name: 'Analytics', href: '/analytics', icon: LuTrendingUp },
 ]
 
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
@@ -24,7 +25,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
     <aside
       className={cn(
         'fixed left-0 top-0 z-40 h-screen flex flex-col transition-all duration-200 border-r border-border',
-        collapsed ? 'w-16' : 'w-56',
+        collapsed ? 'w-14' : 'w-56',
         'bg-card text-foreground'
       )}
     >
@@ -41,15 +42,20 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         )}
         <button
           onClick={onToggle}
-          className={cn('p-1.5 hover:bg-muted transition-colors', !collapsed && 'absolute right-2')}
+          className={cn('hover:bg-muted transition-colors', !collapsed && 'absolute right-2')}
         >
-          {collapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
+          <GoSidebarCollapse
+            className={cn(
+              'size-[18px]',
+              !collapsed && 'rotate-180 transition-transform duration-300'
+            )}
+          />
         </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-3 overflow-y-auto">
-        <ul className={cn('grid gap-1', collapsed ? 'px-2' : 'px-3')}>
+      <nav className="flex-1 overflow-y-auto">
+        <ul className={cn('grid gap-1')}>
           {navigation.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
             return (

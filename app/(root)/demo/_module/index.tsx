@@ -25,7 +25,7 @@ import {
   USelectTrigger,
   USelectValue,
 } from '@/components/ui'
-import { Search } from 'lucide-react'
+import { LuSearch } from 'react-icons/lu'
 import FormDemo from '@/components/demo/form-demo'
 
 export default function Index() {
@@ -62,7 +62,7 @@ export default function Index() {
               <UButton size="default">Default</UButton>
               <UButton size="lg">Large</UButton>
               <UButton size="icon">
-                <Search className="w-4 h-4" />
+                <LuSearch className="w-4 h-4" />
               </UButton>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -120,7 +120,7 @@ export default function Index() {
             <div className="grid gap-2">
               <ULabel htmlFor="input-2">With Icon</ULabel>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <LuSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <UInput id="input-2" placeholder="Search..." className="pl-9" />
               </div>
             </div>
