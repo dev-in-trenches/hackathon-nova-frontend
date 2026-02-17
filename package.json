@@ -9,9 +9,7 @@
     "lint": "eslint",
     "check-format": "prettier --check .",
     "format": "prettier --write .",
-    "preinstall": "npx only-allow pnpm",
-    "prepare": "husky",
-    "audit": "pnpm audit"
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -55,14 +53,5 @@
     "*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier --write"
     ]
-  },
-  "packageManager": "pnpm@9.15.0",
-  "pnpm": {
-    "overrides": {
-      "next@>=16.0.0-beta.0 <16.0.9": ">=16.0.9",
-      "next@>=15.6.0-canary.0 <16.1.5": ">=16.1.5",
-      "next@>=16.0.0-beta.0 <16.0.11": ">=16.0.11",
-      "next@>=16.0.0-beta.0 <16.1.5": ">=16.1.5"
-    }
   }
 }
