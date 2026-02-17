@@ -7,6 +7,7 @@ import { PipelineSection } from './pipeline-section'
 import { SearchFilterSection } from './search-filter-section'
 import { PageHeading } from '@/components/shared/page-heading'
 import { cn } from '@/lib/utils'
+import { USelect, USelectContent, USelectItem, USelectTrigger, USelectValue } from '@/components/ui'
 
 const applicationStatus = [
   { label: 'Drafted', count: 12, color: 'bg-muted' },
@@ -128,17 +129,18 @@ const columns: Column<Job>[] = [
     header: '',
     width: '120px',
     render: (row) => (
-      <select
-        value={row.status}
-        onChange={() => {}}
-        className="h-8 px-2 text-sm bg-background border"
-      >
-        {statusOptions.map((status) => (
-          <option key={status} value={status}>
-            {status}
-          </option>
-        ))}
-      </select>
+      <USelect value={row.status}>
+        <USelectTrigger>
+          <USelectValue placeholder="Select an option" />
+        </USelectTrigger>
+        <USelectContent>
+          {statusOptions.map((status) => (
+            <USelectItem key={status} value={status}>
+              {status}
+            </USelectItem>
+          ))}
+        </USelectContent>
+      </USelect>
     ),
   },
 ]
