@@ -55,5 +55,6 @@
     "*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.15.0"
 }
