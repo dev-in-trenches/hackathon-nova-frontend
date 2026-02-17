@@ -1,5 +1,5 @@
 import { MetricsSection } from './metrics-section'
-import { WeeklyChartSection } from './weekly-chart-section'
+import { PerformanceSection } from './performance-section'
 import { BidStrategyTable } from './bid-strategy-table'
 import { PageHeading } from '@/components/shared/page-heading'
 import { analyticsData, metrics } from './data'
@@ -14,7 +14,11 @@ export default function AnalyticsPage() {
 
       <MetricsSection metrics={metrics} />
 
-      <WeeklyChartSection stats={analyticsData.weeklyStats} />
+      <PerformanceSection
+        weeklyStats={analyticsData.weeklyStats}
+        monthlyStats={analyticsData.monthlyStats}
+        yearlyStats={analyticsData.yearlyStats}
+      />
 
       <BidStrategyTable data={analyticsData.bidStrategyStats} />
     </div>
