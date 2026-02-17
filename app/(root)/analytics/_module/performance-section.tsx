@@ -44,17 +44,23 @@ export function PerformanceSection({
         </USelect>
       </UCardHeader>
       <UCardContent>
-        <div className="h-48 flex items-end gap-2">
-          {stats.map((stat) => (
+        <div className="h-48 flex items-end gap-2" key={period}>
+          {stats.map((stat, index) => (
             <div key={stat.day} className="flex-1 flex flex-col items-center gap-2">
               <div className="w-full flex gap-0.5 h-32 items-end">
                 <div
-                  className="flex-1 bg-primary/30 rounded-t-sm"
-                  style={{ height: `${(stat.submitted / maxValue) * 100}%` }}
+                  className="flex-1 bg-primary/30 rounded-t-sm animate-bar"
+                  style={{
+                    height: `${(stat.submitted / maxValue) * 100}%`,
+                    animationDelay: `${index * 50}ms`,
+                  }}
                 />
                 <div
-                  className="flex-1 bg-primary rounded-t-sm"
-                  style={{ height: `${(stat.won / maxValue) * 100}%` }}
+                  className="flex-1 bg-primary rounded-t-sm animate-bar"
+                  style={{
+                    height: `${(stat.won / maxValue) * 100}%`,
+                    animationDelay: `${index * 50}ms`,
+                  }}
                 />
               </div>
               <span className="text-xs text-muted-foreground">{stat.day}</span>

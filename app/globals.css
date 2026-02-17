@@ -243,3 +243,19 @@ tr:hover td {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
+/* CHART BAR ANIMATION */
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  to {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+
+.animate-bar {
+  animation: bar-grow 0.5s ease-out forwards;
+}
