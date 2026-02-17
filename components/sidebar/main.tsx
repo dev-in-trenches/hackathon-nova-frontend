@@ -22,8 +22,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
-
-        <main className="p-4">{children}</main>
+        <main>{children}</main>
       </div>
     </div>
   )

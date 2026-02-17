@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Open_Sans } from 'next/font/google'
+import { Space_Mono } from 'next/font/google'
 import './globals.css'
 import { ViewTransitions } from 'next-view-transitions'
 import { AppContextProvider } from '@/components/layout/context-provider'
@@ -7,8 +7,9 @@ import LClientProvider from '@/components/layout/client-provider'
 import LQueryProvider from '@/components/layout/query-provider'
 import LToastProvider from '@/components/layout/toast-provider'
 
-const fDefault = Open_Sans({
+const fDefault = Space_Mono({
   variable: '--font-default',
+  weight: ['400', '700'],
   subsets: ['latin'],
   display: 'swap',
 })
